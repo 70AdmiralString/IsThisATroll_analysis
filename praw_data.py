@@ -42,27 +42,42 @@ reddit = praw.Reddit(
 	username=secrets.username,
 )
 
-print('You are now using:', reddit.user.me())
+print('You are now using:', reddit.user.me(), '\n')
 
 '''
 for submission in reddit.subreddit("learnpython").hot(limit=10):
 	print(submission.title)
 '''
 
+import pprint
+
+
 # assume you have a reddit instance bound to variable `reddit`
+print('subreddit info')
 subreddit = reddit.subreddit("redditdev")
+pprint.pprint(vars(subreddit))
 
 # assume you have a Reddit instance bound to variable `reddit`
-redditor1 = reddit.redditor("spez")
-redditor2 = reddit.redditor("rubinjer")
-print(redditor2.link_karma)
+redditor2 = reddit.redditor("spez")
+redditor1 = reddit.redditor("rubinjer")
+#print(redditor2.link_karma)
 # Output: u/bboe's karma
-
-print("User Information")
-for attr in redditor2.__dict__:
-	print(attr, ':', redditor2.__dict__[attr])
 
 print("\n Comment Information")
 for i in redditor2.comments.top(limit = 1): comment = i
-for attr in comment.__dict__:
-	print(attr, ':', comment.__dict__[attr])
+pprint.pprint(vars(comment))
+#for attr in comment.__dict__:
+#	print(attr, ':', comment.__dict__[attr])
+
+print('\n Submission Information')
+# assume you have a Reddit instance bound to variable `reddit`
+submission = reddit.submission(id="39zje0")
+print(submission.title)  # to make it non-lazy
+pprint.pprint(vars(submission))
+
+print("\n User Information")
+pprint.pprint(vars(redditor2))
+#for attr in redditor2.__dict__:
+#	print(attr, ':', redditor2.__dict__[attr])
+print(vars(redditor2))
+print(redditor2._fetched)
