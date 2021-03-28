@@ -53,7 +53,8 @@ for submission in reddit.subreddit("learnpython").hot(limit=10):
 subreddit = reddit.subreddit("redditdev")
 
 # assume you have a Reddit instance bound to variable `reddit`
-redditor2 = reddit.redditor("Spez")
+redditor1 = reddit.redditor("spez")
+redditor2 = reddit.redditor("rubinjer")
 print(redditor2.link_karma)
 # Output: u/bboe's karma
 
@@ -62,6 +63,6 @@ for attr in redditor2.__dict__:
 	print(attr, ':', redditor2.__dict__[attr])
 
 print("\n Comment Information")
-for i in redditor2.comments.new(limit = 1): comment = i
+for i in redditor2.comments.top(limit = 1): comment = i
 for attr in comment.__dict__:
 	print(attr, ':', comment.__dict__[attr])
