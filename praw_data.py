@@ -1,37 +1,4 @@
-"""
-How to access the Python Reddit Api Wrapper (PRAW)
-"""
 import praw
-
-"""
-To do anything with praw, you need to instanciate an instance of the Reddit class.
-But to actually pull anything from the internet we need to register with reddit.
-I know, it is stupid.
-I've already done it for us, but here's how to do it in the future.
-
-1) Get a reddit account
-
-username: XXXXXXXXXXXXX
-password: XXXXXXXXXXXXX
-
-2) Register the 'app'
-
-a) Go to https://www.reddit.com/prefs/apps/ 
-b) Click "create an app"
-c) Enter a name for your "app"
-d) Select "script" if your app is not going to post anything or reddit.
-e) Enter "http://localhost:8080" under "redirect uri"
-f) Hit "Create App"
-
-3) Instanciate Reddit
-
-Enter the following python code
-
-The client ID is the 14-character string listed just under “personal use script” for the desired developed application
-
-The client secret is at least a 27-character string listed adjacent to secret for the application.
-
-"""
 import secrets
 
 reddit = praw.Reddit(
@@ -51,33 +18,49 @@ for submission in reddit.subreddit("learnpython").hot(limit=10):
 
 import pprint
 
+def print_attrs(obj):
+	"""prints the attributes"""
 
-# assume you have a reddit instance bound to variable `reddit`
-print('subreddit info')
-subreddit = reddit.subreddit("redditdev")
-pprint.pprint(vars(subreddit))
+	for attr in obj.__dict__:
+		result = obj.__dict__[attr]
+		if type(result) == str:
+			n = len(result)
+			n = min(n, 100)
+			if n == 100:
+				print(attr, ':', obj.__dict__[attr][:n], '...')
+		else:
+			print(attr, ':', obj.__dict__[attr])
+	
 
-# assume you have a Reddit instance bound to variable `reddit`
-redditor2 = reddit.redditor("spez")
-redditor1 = reddit.redditor("rubinjer")
-#print(redditor2.link_karma)
-# Output: u/bboe's karma
+def subreddit_attrs(example = "redditdev"):
+	"""Prints a list of all attributes of the subreddit object, using the example subreddit"""
 
-print("\n Comment Information")
-for i in redditor2.comments.top(limit = 1): comment = i
-pprint.pprint(vars(comment))
-#for attr in comment.__dict__:
-#	print(attr, ':', comment.__dict__[attr])
+	obj = reddit.subreddit(example)
+	temp = obj.description
+	print('Attributes for the Subreddit:', example)
+	print_attrs(obj)
 
-print('\n Submission Information')
-# assume you have a Reddit instance bound to variable `reddit`
-submission = reddit.submission(id="39zje0")
-print(submission.title)  # to make it non-lazy
-pprint.pprint(vars(submission))
+def redditor_attrs(example = "spez"):
+	"""Prints a list of all attributes of the redditor object, using the example redditor"""
 
-print("\n User Information")
-pprint.pprint(vars(redditor2))
-#for attr in redditor2.__dict__:
-#	print(attr, ':', redditor2.__dict__[attr])
-print(vars(redditor2))
-print(redditor2._fetched)
+	obj = reddit.redditor(example)
+	temp = obj.link_karma
+	print('Attributes for the Redditor:', example)
+	print_attrs(obj)
+
+def comment_attrs(example = "cs8llxd"):
+	"""Prints a list of all attributes of the comment object, using the example comment"""
+
+	obj = reddit.comment(id = example)
+	temp = obj.body
+	print('Attributes for the Comment: id =', example)
+	print_attrs(obj)
+
+def submission_attrs(example = "39zje0"):
+	"""Prints a list of all attributes of the submission object, using the example submission"""
+
+	obj = reddit.submission(id = example)
+	temp = obj.title
+	print('Attributes for the Submission:', obj.title)
+	print_attrs(obj)
+
