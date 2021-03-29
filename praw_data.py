@@ -27,9 +27,9 @@ def print_attrs(obj):
 			n = len(result)
 			n = min(n, 100)
 			if n == 100:
-				print(attr, ':', obj.__dict__[attr][:n], '...')
+				print(attr, ':', obj.__dict__[attr][:n], '...,      ')
 		else:
-			print(attr, ':', obj.__dict__[attr])
+			print(attr, ':', obj.__dict__[attr], '     ')
 	
 
 def subreddit_attrs(example = "redditdev"):
