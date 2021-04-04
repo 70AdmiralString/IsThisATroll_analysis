@@ -17,7 +17,7 @@ n = len(Trolls)
 
 
 COMMENTS = False
-SUBMISSIONS = True
+SUBMISSIONS = False
 
 if COMMENTS:
 	subreddits = {}
@@ -76,3 +76,23 @@ if SUBMISSIONS:
 
 	items = list(subreddits.items())
 	print(items[:10])
+
+def get_post(sub):
+	"""Get's the url of posts that we want"""
+	i = 900
+	for user in Trolls:
+		user = Trolls[i]
+		if i >= 1000:
+			break
+		i += 1
+		print('i = ', i)
+		troll = reddit.redditor(user)
+		for post in troll.submissions.top(limit = 100):
+			try:
+				if post.subreddit.display_name == sub:
+					print('subreddit:', post.subreddit.display_name)
+					print('poster:', user)
+					print('permalink', post.permalink)
+					print('url:', post.url)
+			except:
+				print('Maybe a 403 error')
