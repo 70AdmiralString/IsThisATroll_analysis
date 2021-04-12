@@ -74,4 +74,8 @@ if POSTS:
 		except:
 			print('user', j, troll, 'not found')
 
-	df.to_pickle("data_warehouse/post_data.pkl")
+	df.to_csv("data_warehouse/post_data.csv.zip", 
+           index=False, 
+           compression="zip")
+
+	#to load the data again, just use df = pd.read_csv('data_warehouse/post_data.csv.zip')
