@@ -14,7 +14,7 @@ import pandas as pd
 import datetime
 
 USER = False
-POSTS = True
+POSTS = False
 
 if USER:
 	df = pd.DataFrame(columns = ['id', 'user_name', 'redditor_object', 'data_set', 'last_pulled', 'total_karma'])
@@ -59,8 +59,8 @@ if POSTS:
 				i += 1
 				try:
 					submission_object = post
-					subreddit = post.subreddit.display_name
-					subreddit_id = post.subreddit.id
+					subreddit = post.subreddit.display_name #Faster version: str(post.subreddit)
+					subreddit_id = post.subreddit.id #Faster version: post.subreddit_if
 					url = post.permalink
 					post_id = post.id
 					created = post.created_utc
@@ -77,3 +77,14 @@ if POSTS:
 	df.to_pickle("data_warehouse/post_data.pkl.zip", compression="zip")
 
 	#to load the data again, just use df = pd.read_pickle('data_warehouse/post_data.pkl.zip')
+
+"""
+The comment data will be bigger than the last one. Maybe 10 times the size. So we need a new method of downloading and storing the data.
+I should stratify the trolls, put it into 4 parts. Everyone runs the script on 1 fourth of the trolls (taken using mod 4).
+Dumps in batches of 100.
+There should be a way to check to see how much "progess" has been made downloading and start from there.
+
+When restarting the program, it will: 1) check which strata you are working in, 2) retrieve all the data already stored, 3) check what the last user/comment was, 4) continue from there.
+
+indexes need to be better organized
+"""
