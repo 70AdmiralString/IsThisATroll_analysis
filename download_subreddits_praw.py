@@ -32,9 +32,9 @@ for sub in subs:
 		#if i>10:
 		#	break
 	except:
-		print('some wierd error occured')
+		print('some weird error occured')
 		errs +=1
-		print(errs, 'total errors have occured')
+		print(errs, ' total errors have occured')
 
 df.to_pickle('data_warehouse/subreddit_data.pkl')
 
